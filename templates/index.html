@@ -1,0 +1,194 @@
+{% comment %} <form id="myForm" action="user" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" id="fileInput" accept="images/*">
+    <img id="previewImage" src="#" alt="Preview" style="display:none; max-width: 1000px; max-height: 100px;">
+    <input type="submit" value="Submit">
+</form>
+
+<script>
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+            document.getElementById('previewImage') .src = e.target.result;
+            localStorage.setItem('key', e.target.result);
+            document.getElementById('previewImage').style.display = 'block';
+        }
+        
+        reader.readAsDataURL(file);
+    });
+</script> {% endcomment %}
+{% comment %} <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Image</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        img {
+            max-width: 80%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        p {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <h2>Upload an Image</h2>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" id="fileInput" name="image" required>
+        <img id="previewImage" src="#" alt="Preview" style="display:none; max-width: 500px; max-height: 300px;">
+        <button type="submit">Upload and Next</button>
+    </form>
+</body>
+
+<script>
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+        
+        reader.onload = function(e) {
+            document.getElementById('previewImage') .src = e.target.result;
+            localStorage.setItem('key', e.target.result);
+            document.getElementById('previewImage').style.display = 'block';
+        }
+        
+        reader.readAsDataURL(file);
+    });
+
+    
+</script>
+</html> {% endcomment %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload and Display Image</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #B6DBF6; /* Light blue background */
+        }
+
+        /* Container for form and image preview */
+        .container {
+            max-width: 400px;
+            width: 100%;
+            background: #fff;
+            padding: 30px;
+            border-radius: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Image area styles */
+        .img-area {
+            position: relative;
+            width: 100%;
+            height: 240px;
+            background: #f2f2f2; /* Grey background */
+            margin-bottom: 20px;
+            border-radius: 15px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .img-area img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Button styles */
+        .select-image {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 15px;
+            background: #0071FF; /* Blue background */
+            color: #fff;
+            font-weight: 500;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: background-color .3s;
+            text-align: center;
+        }
+        .select-image:hover {
+            background: #005DD1; /* Dark blue background on hover */
+        }
+
+        /* Hidden file input */
+        input[type="file"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="img-area" id="preview">
+                <p>Select an image to upload</p>
+            </div>
+            <input type="file" id="file" name="image" required>
+            <button type="button" class="select-image" onclick="document.getElementById('file').click();">Select Image</button>
+            <button type="submit" class="select-image">Upload Image</button>
+        </form>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('file');
+        const preview = document.getElementById('preview');
+
+        fileInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.width = '100%';
+                    img.style.height = '100%';
+                    img.style.objectFit = 'cover';
+
+                    preview.innerHTML = '';  // Clear the preview
+                    preview.appendChild(img);  // Append the new image
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
+
+
